@@ -1,5 +1,6 @@
 import os
 import shutil
+from datetime import datetime
 from pathlib import Path
 
 
@@ -71,6 +72,24 @@ class FileUtil:
         if FileUtil.is_exist(path):
             return os.stat(path).st_size
         return None
+
+    @staticmethod
+    def get_created_modified_datetime(path):
+        if not FileUtil.is_exist(path):
+            return None, None
+        load_file_path = Path(path)
+        create_timestamp = load_file_path.stat().st_ctime
+        modify_timestamp = load_file_path.stat().st_mtime
+        return datetime.fromtimestamp(create_timestamp), datetime.fromtimestamp(modify_timestamp)
+
+    @staticmethod
+    def create_empty_file(path):
+        try:
+            with open(path, "x") as empty:
+                empty.close()
+                return True
+        except FileExistsError:
+            return False
 
     @staticmethod
     def human_readable_file_size(size):
