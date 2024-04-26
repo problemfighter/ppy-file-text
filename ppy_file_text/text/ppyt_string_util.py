@@ -78,7 +78,7 @@ class StringUtil:
 
     @staticmethod
     def remove_leading_number(text: str):
-        return re.sub("^\d+", '', text)
+        return re.sub(r"^\d+", '', text)
 
     @staticmethod
     def lower_first_char(text: str):
